@@ -7,16 +7,20 @@ export const coaches = {
 
 export type Coach = keyof typeof coaches;
 
-export function CoachPicker({ coach, onChange, label = 'Wybierz trenera' }: {
+export function CoachSelect({ coach, onChange }: {
   coach: Coach;
   onChange: (coach: Coach) => void;
-  label?: string;
 }) {
   return (
-    <div className="coach-picker" role="group" aria-label={label}>
-      <button type="button" aria-pressed={coach === 'lion'} onClick={() => onChange('lion')}>{coaches.lion.name}</button>
-      <button type="button" aria-pressed={coach === 'owl'} onClick={() => onChange('owl')}>{coaches.owl.name}</button>
-    </div>
+    <select
+      className="coach-select"
+      aria-label="Trener"
+      value={coach}
+      onChange={event => onChange(event.target.value === 'owl' ? 'owl' : 'lion')}
+    >
+      <option value="lion">{coaches.lion.name}</option>
+      <option value="owl">{coaches.owl.name}</option>
+    </select>
   );
 }
 

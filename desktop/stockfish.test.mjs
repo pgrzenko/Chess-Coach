@@ -8,7 +8,7 @@ const engine = createStockfish(defaultEnginePath);
 const position = moves => ({ initialFen: DEFAULT_POSITION, moves });
 after(() => engine.close());
 
-function assertLegalLines(result, history, ranks = [1, 2, 3]) {
+function assertLegalLines(result, history, ranks = [1, 2]) {
   assert.equal(result.status, 'ok');
   assert.deepEqual(result.lines.map(line => line.rank), ranks);
   assert.equal(new Set(result.lines.map(line => line.depth)).size, 1);
@@ -20,7 +20,7 @@ function assertLegalLines(result, history, ranks = [1, 2, 3]) {
   }
 }
 
-test('returns three legal lines from the same depth', async () => {
+test('returns two legal lines from the same depth', async () => {
   assertLegalLines(await engine.analyze(position([])), []);
 });
 
@@ -36,11 +36,22 @@ test('replaces an active search and skips a superseded queued position', async (
   assertLegalLines(await last, moves);
 });
 
-test('uses one legal line for sparring and hints, then restores three for analysis', async () => {
+test('uses one legal line for sparring and hints, then restores two for analysis', async () => {
   const moves = ['e2e4'];
   assertLegalLines(await engine.analyze({ ...position(moves), purpose: 'play' }), moves, [1]);
   assertLegalLines(await engine.analyze({ ...position([]), purpose: 'hint' }), [], [1]);
   assertLegalLines(await engine.analyze(position([])), []);
+});
+
+test('returns the only legal move from a restricted position', async () => {
+  const fen = '4k3/8/8/8/8/8/4q3/4K3 w - - 0 1';
+  const result = await engine.analyze({ initialFen: fen, moves: [] });
+  assert.equal(result.status, 'ok');
+  assert.deepEqual(result.lines.map(line => line.rank), [1]);
+  const chess = new Chess(fen);
+  assert.equal(chess.moves().length, 1);
+  const uci = result.lines[0].moves[0];
+  assert.ok(chess.move({ from: uci.slice(0, 2), to: uci.slice(2, 4), promotion: uci[4] }));
 });
 
 test('rejects illegal input and recognizes a finished game', async () => {

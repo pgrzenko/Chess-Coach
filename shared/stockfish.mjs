@@ -1,6 +1,6 @@
 import { Chess } from 'chess.js';
 
-const variationCount = 3;
+const variationCount = 2;
 const searchMs = 700;
 const uciMove = /^[a-h][1-8][a-h][1-8][qrbn]?$/;
 
