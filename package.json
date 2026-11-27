@@ -11,9 +11,10 @@
   "scripts": {
     "setup:engine": "powershell.exe -NoProfile -File scripts/setup-stockfish.ps1",
     "build": "vite build",
-    "typecheck": "tsc --noEmit && node --check desktop/main.mjs && node --check desktop/speech.mjs && node --check desktop/stockfish.mjs && node --check desktop/preload.cjs && node --check desktop/lion-lesson.mjs && node --check desktop/openai-env.mjs && node --check desktop/lion-voice.mjs && node --check desktop/speech-normalizer.mjs && node --check desktop/recorded-clips.mjs",
+    "typecheck": "tsc --noEmit && node --check desktop/main.mjs && node --check desktop/speech.mjs && node --check desktop/stockfish.mjs && node --check desktop/preload.cjs && node --check desktop/lion-lesson.mjs && node --check desktop/openai-env.mjs && node --check desktop/lion-voice.mjs && node --check desktop/speech-normalizer.mjs && node --check desktop/recorded-clips.mjs && node --check shared/stockfish.mjs && node --check shared/recorded-clips.mjs && node --check shared/speech-normalizer.mjs && node --check shared/mate-lesson.mjs && node --check server/lion-comment.mjs && node --check api/mate.mjs",
     "start": "npm run build && electron .",
-    "test": "node --test desktop/stockfish.test.mjs desktop/lion.test.mjs desktop/recorded-clips.test.mjs desktop/piece-lessons.test.mjs"
+    "test": "node --test desktop/stockfish.test.mjs desktop/lion.test.mjs desktop/recorded-clips.test.mjs desktop/piece-lessons.test.mjs",
+    "build:web": "vite build --mode web"
   },
   "dependencies": {
     "@lichess-org/chessground": "10.0.0",
@@ -26,6 +27,7 @@
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "electron": "45.5.0",
+    "stockfish": "19.0.1",
     "typescript": "6.0.3",
     "vite": "8.4.0"
   }

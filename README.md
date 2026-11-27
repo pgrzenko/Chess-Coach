@@ -22,7 +22,13 @@ W Sparingu wybierz kolor i rozegraj partię ze Stockfishem. Podpowiedzi możesz 
 
 Lekcja „Mat w jednym” działa bez klucza. Lew pokazuje strzałkę po nieudanej próbie. Lokalny głos Windows można włączyć przyciskiem **Odsłuchaj głos Windows**. **Powtórz** korzysta z nagrania w pamięci.
 
-Opcjonalny klucz OpenAI można wpisać w **Dla dzieci → Ustawienia dla dorosłego**. Zapis uruchamia Lunę i głos Cedar. Aplikacja przechowuje klucz w zaszyfrowanym pliku w katalogu danych Electron. Odtworzenie głosu OpenAI następuje po zgodności transkrypcji z zatwierdzonym tekstem. W razie braku klucza, błędu lub rozbieżności aplikacja udostępnia to samo zdanie do odsłuchania głosem Windows. Zapis pól w dymku jest szachowy, np. `g7`. Wymowa jest przygotowywana osobno. Przy uruchomieniu przez `npm start` wpisy `[lion-voice]` w terminalu pokazują liczbę tokenów z Realtime API.
+Na Windows aplikacja odczytuje opcjonalny klucz z lokalnego pliku `.env` przy starcie Electrona. Ustawienia dla dorosłych pokazują stan konfiguracji. W lekcji Lwa OpenAI może wybrać zdanie, a Cedar uzupełnia brakujące nagranie po sprawdzeniu transkrypcji.
+
+## Wersja przeglądarkowa
+
+`npm run build:web` składa frontend, nagrania i jednowątkowy Stockfish WASM do `dist-web/`. Vercel używa tego buildu i funkcji Node.js pod `/api/mate`. Do buildu potrzebne jest narzędzie `tar`, które dołącza archiwum kodu źródłowego do strony. Portrety Lwa i Sowy można dołączyć do paczki jako `public/lion-coach.png` i `public/owl-coach.png`.
+
+Funkcja wywołuje model, gdy w środowisku serwera znajdują się `OPENAI_API_KEY` i losowe zaproszenie `CHESS_COACH_INVITE` (32–128 znaków z alfabetu base64url). Link z fragmentem `#invite=ZAPROSZENIE` pozwala odbiorcy korzystać z wyboru zdania przez model. Przy niedostępnej funkcji szachownica, podpowiedzi i głos z MP3 pozostają dostępne. Klucz API jest odczytywany wyłącznie jako zmienna procesu funkcji.
 
 ## Weryfikacja
 

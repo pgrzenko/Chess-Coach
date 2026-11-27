@@ -9,37 +9,12 @@ import '@lichess-org/chessground/assets/chessground.cburnett.css';
 import './styles.css';
 import { ChildrenLessons } from './ChildrenLessons';
 import { CoachPicker, coaches, type Coach } from './Coach';
-import { unlockLessonAudio, useLessonAudio, type RecordedRequest } from './lesson-audio';
-import type { LionPreload } from './LionLesson';
+import { CodeAndLicenses } from './CodeAndLicenses';
+import { unlockLessonAudio, useLessonAudio } from './lesson-audio';
+import type { AnalysisResult, EngineLine, EnginePurpose } from './chess-coach';
 
 type Mode = 'analysis' | 'sparring';
 type PlayerColor = 'w' | 'b';
-type EnginePurpose = 'analysis' | 'play' | 'hint';
-type SparringHint = Pick<Move, 'from' | 'to' | 'promotion'> & { coach: Coach };
-
-type EngineLine = {
-  rank: number;
-  depth: number;
-  score: { type: 'cp' | 'mate'; value: number };
-  moves: string[];
-};
-
-type AnalysisResult =
-  | { status: 'ok'; lines: EngineLine[] }
-  | { status: 'cancelled' | 'unavailable' };
-
-declare global {
-  interface Window {
-    chessCoach?: {
-      analyze(position: { initialFen: string; moves: string[]; purpose?: EnginePurpose }): Promise<AnalysisResult>;
-      recordedClip?(request: RecordedRequest): Promise<Uint8Array | null>;
-      recordedHint?(move: SparringHint): Promise<Uint8Array[] | null>;
-      speakHint?(move: SparringHint): Promise<boolean>;
-      stopSpeech?(): Promise<void>;
-    } & LionPreload;
-  }
-}
-
 type MoveNode = {
   id: number;
   parent: MoveNode | null;
@@ -56,6 +31,7 @@ type Workspace = Record<Mode, Study> & {
 };
 
 const coachPreference = 'chess-coach:coach';
+const webBuild = import.meta.env.MODE === 'web';
 
 function readCoach(): Coach {
   try {
@@ -261,6 +237,7 @@ function App() {
 
   const [nextPlayer, setNextPlayer] = useState<PlayerColor>('w');
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const settingsToggle = useRef<HTMLButtonElement>(null);
   const [analysisFlipped, setAnalysisFlipped] = useState(false);
   const [evaluationVisible, setEvaluationVisible] = useState(true);
   const [enginePanelOpen, setEnginePanelOpen] = useState(true);
@@ -414,15 +391,17 @@ function App() {
   }, [coach, engine, hintMove, revision, stopHint]);
 
   useEffect(() => {
-    if (childrenOpen) return;
     function navigate(event: KeyboardEvent) {
       if (event.key === 'Escape') {
+        if (settingsOpen) settingsToggle.current?.focus();
         setSettingsOpen(false);
+        if (childrenOpen) return;
         setWorkspace(current => {
           const study = current[current.mode];
           return study.promotion.length ? updateStudy(current, { ...study, promotion: [] }) : current;
         });
       }
+      if (childrenOpen) return;
       const editing = event.target instanceof HTMLElement && event.target.matches('input, select, textarea, [contenteditable]');
       if (event.key === 'ArrowLeft' && !editing && !event.altKey && !event.ctrlKey && !event.metaKey) {
         event.preventDefault();
@@ -431,7 +410,7 @@ function App() {
     }
     window.addEventListener('keydown', navigate);
     return () => window.removeEventListener('keydown', navigate);
-  }, [childrenOpen]);
+  }, [childrenOpen, settingsOpen]);
 
   function openChildren() {
     if (childrenOpen) return;
@@ -515,9 +494,11 @@ function App() {
             <button type="button" aria-pressed={!childrenOpen && isSparring} onClick={() => changeMode('sparring')}>Sparing</button>
             <button type="button" aria-pressed={childrenOpen} onClick={openChildren}>Dla dzieci</button>
           </nav>
-          {!childrenOpen && (
+          {(!childrenOpen || webBuild) && (
             <button
+              ref={settingsToggle}
               className="secondary settings-toggle"
+              data-lessons={childrenOpen}
               type="button"
               aria-controls="game-settings"
               aria-expanded={settingsOpen}
@@ -530,8 +511,17 @@ function App() {
       </header>
 
       {childrenOpen ? (
-        <ChildrenLessons coach={coach} onCoachChange={changeCoach}
-          waitForAnalysis={waitForAnalysis} registerCancellation={registerLionCancellation} />
+        <div className="lesson-workspace">
+          {webBuild && (
+            <aside className="panel settings-panel" id="game-settings" aria-labelledby="settings-title"
+              data-open={settingsOpen} data-lessons="true">
+              <div className="panel-heading"><h2 id="settings-title">Ustawienia</h2></div>
+              <CodeAndLicenses />
+            </aside>
+          )}
+          <ChildrenLessons coach={coach} onCoachChange={changeCoach}
+            waitForAnalysis={waitForAnalysis} registerCancellation={registerLionCancellation} />
+        </div>
       ) : <div className="study">
         <aside className="panel settings-panel" id="game-settings" aria-labelledby="settings-title" data-open={settingsOpen}>
           <div className="panel-heading"><h2 id="settings-title">Ustawienia</h2></div>
@@ -580,6 +570,7 @@ function App() {
               </>
             )}
           </div>
+          {webBuild && <CodeAndLicenses />}
         </aside>
 
         <section className="playing-area" aria-label="Szachownica" data-evaluation={showEvaluation}>
@@ -760,4 +751,12 @@ function App() {
   );
 }
 
-createRoot(document.getElementById('root')!).render(<App />);
+async function renderApp() {
+  if (import.meta.env.MODE === 'web') {
+    const { createWebCoach } = await import('./web-coach');
+    window.chessCoach = createWebCoach();
+  }
+  createRoot(document.getElementById('root')!).render(<App />);
+}
+
+void renderApp();

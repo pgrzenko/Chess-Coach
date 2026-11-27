@@ -1,0 +1,10 @@
+/.env
+/.env.*
+/personal/
+/public/*
+!/public/lion-coach.png
+!/public/owl-coach.png
+/dist/
+/dist-web/
+/node_modules/
+/.git/
