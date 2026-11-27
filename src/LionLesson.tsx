@@ -6,19 +6,8 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react
 import { coaches, LessonTeacher, type Coach } from './Coach';
 import { fetchRecordedClip, unlockLessonAudio, useLessonAudio, type RecordedRequest } from './lesson-audio';
 
-type LionMove = { from: string; to: string; promotion?: string };
-type Voice = 'openai' | 'windows';
-type LionAudio = { source: Voice; wav: Uint8Array };
-type LionAnswer =
-  | { status: 'ok'; passed: boolean; text: string; hint: { from: string; to: string } | null; audio: LionAudio | null }
-  | { status: 'cancelled' | 'unavailable' };
-type VoiceSettings = { envConfigured: boolean };
-
-export type LionPreload = {
-  coachLion?(move: LionMove): Promise<LionAnswer>;
-  stopLion?(): Promise<void>;
-  lionVoiceSettings?(): Promise<VoiceSettings>;
-};
+import { lessonFen } from '../shared/mate-lesson.mjs';
+import type { LionAudio, VoiceSettings } from './chess-coach';
 
 type Phase = 'idle' | 'thinking' | 'speaking';
 type Feedback = { text: string; hint?: Move };
@@ -27,7 +16,7 @@ type Cue =
   | { kind: 'quiet' }
   | { kind: 'line'; round: number; text: string; hint: { from: string; to: string } | null; audio: LionAudio | null };
 
-const initialFen = '7k/5Q2/6K1/8/8/8/8/8 w - - 0 1';
+const initialFen = lessonFen;
 const legalMoves = new Chess(initialFen).moves({ verbose: true });
 const mates = legalMoves.filter(move => new Chess(move.after).isCheckmate());
 const legalDestinations: Dests = new Map();
@@ -37,7 +26,7 @@ for (const move of legalMoves) {
   legalDestinations.set(move.from, destinations);
 }
 
-const voiceLabels: Record<Voice, string> = {
+const voiceLabels: Record<LionAudio['source'], string> = {
   openai: 'Głos syntetyczny OpenAI',
   windows: 'Głos lokalny Windows',
 };
@@ -263,7 +252,7 @@ export function LionLesson({
             {!audio.failed && audio.source === 'windows' && <span>{voiceLabels.windows}</span>}
           </div>
         )}
-        {coach === 'lion' && <details className="lion-settings">
+        {engine?.lionVoiceSettings && <details className="lion-settings">
           <summary>Ustawienia dla dorosłych</summary>
           <p role="status">{settings ? (
             settings.envConfigured ? 'Klucz OpenAI z .env jest widoczny.' : 'Brak klucza OpenAI w .env.'

@@ -9,9 +9,7 @@
 }
 
 .children-lesson-menu h2 { color: #f5e1ab; font-size: 20px; }
-.children-coach-choice { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
-.children-coach-choice span { color: var(--muted); font-size: 13px; }
-.children-coach-choice .coach-picker { margin: 0; }
+.children-coach-note { margin: 0; max-width: 28rem; color: var(--muted); font-size: 13px; line-height: 1.4; }
 
 .children-lesson-choices {
   display: grid;

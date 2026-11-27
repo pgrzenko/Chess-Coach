@@ -7,39 +7,17 @@ import { createRoot } from 'react-dom/client';
 import '@lichess-org/chessground/assets/chessground.base.css';
 import '@lichess-org/chessground/assets/chessground.cburnett.css';
 import './styles.css';
+import { coachHint, formatWhiteScore } from '../shared/coach-hint.mjs';
+import { polishSan, scoreColumns, scorePairs, variationTokens } from '../shared/polish-notation.mjs';
 import { ChildrenLessons } from './ChildrenLessons';
-import { CoachPicker, coaches, type Coach } from './Coach';
-import { unlockLessonAudio, useLessonAudio, type RecordedRequest } from './lesson-audio';
-import type { LionPreload } from './LionLesson';
+import { CoachSelect, coaches, type Coach } from './Coach';
+import { CodeAndLicenses } from './CodeAndLicenses';
+import { unlockLessonAudio, useLessonAudio } from './lesson-audio';
+import { MoveText, moveLabel } from './MoveText';
+import type { AnalysisResult, EngineLine, EnginePurpose } from './chess-coach';
 
 type Mode = 'analysis' | 'sparring';
 type PlayerColor = 'w' | 'b';
-type EnginePurpose = 'analysis' | 'play' | 'hint';
-type SparringHint = Pick<Move, 'from' | 'to' | 'promotion'> & { coach: Coach };
-
-type EngineLine = {
-  rank: number;
-  depth: number;
-  score: { type: 'cp' | 'mate'; value: number };
-  moves: string[];
-};
-
-type AnalysisResult =
-  | { status: 'ok'; lines: EngineLine[] }
-  | { status: 'cancelled' | 'unavailable' };
-
-declare global {
-  interface Window {
-    chessCoach?: {
-      analyze(position: { initialFen: string; moves: string[]; purpose?: EnginePurpose }): Promise<AnalysisResult>;
-      recordedClip?(request: RecordedRequest): Promise<Uint8Array | null>;
-      recordedHint?(move: SparringHint): Promise<Uint8Array[] | null>;
-      speakHint?(move: SparringHint): Promise<boolean>;
-      stopSpeech?(): Promise<void>;
-    } & LionPreload;
-  }
-}
-
 type MoveNode = {
   id: number;
   parent: MoveNode | null;
@@ -56,6 +34,7 @@ type Workspace = Record<Mode, Study> & {
 };
 
 const coachPreference = 'chess-coach:coach';
+const webBuild = import.meta.env.MODE === 'web';
 
 function readCoach(): Coach {
   try {
@@ -70,12 +49,6 @@ const promotionNames: Record<string, string> = {
   b: 'Goniec',
   n: 'Skoczek',
 };
-const evaluationFormat = new Intl.NumberFormat('pl-PL', {
-  signDisplay: 'exceptZero',
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
-});
-
 const lineControls = [
   { target: 'first', label: 'Początek linii', icon: '|‹' },
   { target: 'previous', label: 'Poprzedni ruch', icon: '‹' },
@@ -167,22 +140,10 @@ function addMove(study: Study, move: Move): Study {
   return { active: node, lineTip: node, nodes: [...study.nodes, node], promotion: [] };
 }
 
-function treeRows(nodes: MoveNode[]) {
-  const children = new Map<number, MoveNode[]>();
-  for (const node of nodes) {
-    if (!node.parent) continue;
-    const siblings = children.get(node.parent.id) ?? [];
-    siblings.push(node);
-    children.set(node.parent.id, siblings);
-  }
-
-  const rows: Array<{ node: MoveNode; indent: number }> = [];
-  function visit(node: MoveNode, indent: number) {
-    rows.push({ node, indent });
-    children.get(node.id)?.forEach((child, index) => visit(child, index === 0 ? indent : indent + 1));
-  }
-  visit(nodes[0], 0);
-  return rows;
+function activeLine(lineTip: MoveNode) {
+  const line: MoveNode[] = [];
+  for (let node: MoveNode | null = lineTip; node; node = node.parent) line.push(node);
+  return line.reverse();
 }
 
 function verifyLine(line: EngineLine, fen: string) {
@@ -211,12 +172,7 @@ function whiteScore(score: EngineLine['score'], turn: PlayerColor) {
 }
 
 function formatScore(score: EngineLine['score'], turn: PlayerColor) {
-  const value = whiteScore(score, turn);
-  if (score.type === 'mate') {
-    if (value === 0) return 'Mat';
-    return `Mat ${value > 0 ? 'białych' : 'czarnych'} w ${Math.abs(value)}`;
-  }
-  return evaluationFormat.format(value / 100);
+  return formatWhiteScore(score, turn);
 }
 
 function EvaluationBar({
@@ -261,16 +217,20 @@ function App() {
 
   const [nextPlayer, setNextPlayer] = useState<PlayerColor>('w');
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const settingsToggle = useRef<HTMLButtonElement>(null);
   const [analysisFlipped, setAnalysisFlipped] = useState(false);
   const [evaluationVisible, setEvaluationVisible] = useState(true);
   const [enginePanelOpen, setEnginePanelOpen] = useState(true);
   const [analysis, setAnalysis] = useState<Analysis>();
   const [coach, setCoach] = useState<Coach>(readCoach);
+  const [adviceKey, setAdviceKey] = useState<string | null>(null);
   const [missingAvatar, setMissingAvatar] = useState<Coach>();
   const { name: coachName, image: coachImage } = coaches[coach];
   const [speechFailure, setSpeechFailure] = useState<number>();
   const { begin: beginHint, owns: ownsHint, play: playHint, stop: stopHint } = useLessonAudio();
   const board = useRef<HTMLDivElement>(null);
+  const scoreFrame = useRef<HTMLDivElement>(null);
+  const [scoreRoom, setScoreRoom] = useState({ rows: 12, columns: 1 });
   const ground = useRef<Api | null>(null);
   const { mode, player, hints, revision } = workspace;
   const study = workspace[mode];
@@ -285,7 +245,33 @@ function App() {
     for (const move of path) chess.move(move);
     return { chess, path };
   }, [active]);
-  const rows = useMemo(() => treeRows(nodes), [nodes]);
+  const line = useMemo(() => activeLine(study.lineTip), [study.lineTip]);
+  const pairs = useMemo(() => scorePairs(line.slice(1)), [line]);
+  const branches = useMemo(() => {
+    const onLine = new Set(line);
+    return nodes.filter(node => node.move && node.parent && onLine.has(node.parent) && !onLine.has(node))
+      .sort((left, right) => left.ply - right.ply || left.id - right.id);
+  }, [line, nodes]);
+  useLayoutEffect(() => {
+    const node = scoreFrame.current;
+    if (!node) return;
+    const measure = () => {
+      const width = node.clientWidth;
+      const start = node.querySelector('.history-start');
+      const branchList = node.querySelector('.branches');
+      const reserved = (start instanceof HTMLElement ? start.offsetHeight : 0)
+        + (branchList instanceof HTMLElement ? branchList.offsetHeight : 0) + 16;
+      const height = Math.max(180, node.clientHeight - reserved);
+      const columns = Math.max(1, Math.min(3, Math.floor((width + 18) / (184 + 18))));
+      const rows = Math.max(6, Math.floor(height / 36));
+      setScoreRoom(current => current.rows === rows && current.columns === columns ? current : { rows, columns });
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [childrenOpen, branches.length]);
+  const moveColumns = scoreColumns(pairs, scoreRoom.rows, scoreRoom.columns);
   const gameOver = chess.isGameOver();
   const turn = chess.turn();
   const playerTurn = turn === player;
@@ -304,7 +290,7 @@ function App() {
   const lines = useMemo(() => {
     if (isSparring || result?.status !== 'ok') return [];
     return result.lines.slice().sort((left, right) => left.rank - right.rank)
-      .flatMap(line => verifyLine(line, fen) ?? []).slice(0, 3);
+      .flatMap(line => verifyLine(line, fen) ?? []).slice(0, 2);
   }, [isSparring, result, fen]);
   const suggestion = purpose === 'hint' && result?.status === 'ok'
     ? legal.find(move => move.lan === result.lines[0]?.moves[0])
@@ -414,15 +400,17 @@ function App() {
   }, [coach, engine, hintMove, revision, stopHint]);
 
   useEffect(() => {
-    if (childrenOpen) return;
     function navigate(event: KeyboardEvent) {
       if (event.key === 'Escape') {
+        if (settingsOpen) settingsToggle.current?.focus();
         setSettingsOpen(false);
+        if (childrenOpen) return;
         setWorkspace(current => {
           const study = current[current.mode];
           return study.promotion.length ? updateStudy(current, { ...study, promotion: [] }) : current;
         });
       }
+      if (childrenOpen) return;
       const editing = event.target instanceof HTMLElement && event.target.matches('input, select, textarea, [contenteditable]');
       if (event.key === 'ArrowLeft' && !editing && !event.altKey && !event.ctrlKey && !event.metaKey) {
         event.preventDefault();
@@ -431,7 +419,7 @@ function App() {
     }
     window.addEventListener('keydown', navigate);
     return () => window.removeEventListener('keydown', navigate);
-  }, [childrenOpen]);
+  }, [childrenOpen, settingsOpen]);
 
   function openChildren() {
     if (childrenOpen) return;
@@ -482,6 +470,14 @@ function App() {
     if (ownsHint(mine) && !spoken) setSpeechFailure(revision);
   }
 
+  const positionKey = `${mode}:${active.id}`;
+  const adviceVisible = adviceKey === positionKey;
+  const hintEngine = !engine ? { status: 'unavailable' as const }
+    : !purpose ? { status: 'idle' as const }
+    : !result || result.status === 'cancelled' ? { status: 'pending' as const }
+    : result;
+  const advice = adviceVisible ? coachHint(chess, hintEngine) : null;
+
   const positionStatus = chess.isCheckmate() ? 'Mat'
     : chess.isStalemate() ? 'Pat'
     : gameOver ? 'Remis'
@@ -494,6 +490,25 @@ function App() {
   else if (isSparring && !hints) coachStatus = 'Podpowiedzi wyłączone';
   else if (isSparring) coachStatus = hint ? 'Proponowany ruch' : 'Szukam podpowiedzi…';
   else if (result?.status === 'ok') coachStatus = lines.length ? 'Analiza gotowa' : 'Brak wariantów';
+
+  function selectNode(node: MoveNode) {
+    setWorkspace(current => current.mode === 'analysis'
+      ? updateStudy(current, selectLine(current.analysis, node))
+      : current);
+  }
+
+  function halfMove(node: MoveNode | undefined, marker: string) {
+    if (!node?.move) return <span className="move-gap" />;
+    const label = `${marker} ${moveLabel(node.move.san)}`;
+    const selected = active === node ? 'step' as const : undefined;
+    const body = <MoveText san={node.move.san} />;
+    if (isSparring) return <span className="recorded-move" aria-label={label} aria-current={selected}>{body}</span>;
+    return (
+      <button type="button" aria-label={label} aria-current={selected} onClick={() => selectNode(node)}>
+        {body}
+      </button>
+    );
+  }
 
   function navigateAnalysis(target: LineControl) {
     setWorkspace(current => {
@@ -510,14 +525,17 @@ function App() {
       <header className="masthead">
         <h1>AI Chess Coach</h1>
         <div className="header-controls">
-          <nav className="mode-switch" aria-label="Tryb gry">
+          <nav className="mode-switch" aria-label="Tryb i trener">
             <button type="button" aria-pressed={!childrenOpen && !isSparring} onClick={() => changeMode('analysis')}>Analiza</button>
             <button type="button" aria-pressed={!childrenOpen && isSparring} onClick={() => changeMode('sparring')}>Sparing</button>
             <button type="button" aria-pressed={childrenOpen} onClick={openChildren}>Dla dzieci</button>
+            <CoachSelect coach={coach} onChange={changeCoach} />
           </nav>
-          {!childrenOpen && (
+          {(!childrenOpen || webBuild) && (
             <button
+              ref={settingsToggle}
               className="secondary settings-toggle"
+              data-lessons={childrenOpen}
               type="button"
               aria-controls="game-settings"
               aria-expanded={settingsOpen}
@@ -530,16 +548,26 @@ function App() {
       </header>
 
       {childrenOpen ? (
-        <ChildrenLessons coach={coach} onCoachChange={changeCoach}
-          waitForAnalysis={waitForAnalysis} registerCancellation={registerLionCancellation} />
+        <div className="lesson-workspace">
+          {webBuild && (
+            <aside className="panel settings-panel" id="game-settings" aria-labelledby="settings-title"
+              data-open={settingsOpen} data-lessons="true">
+              <div className="panel-heading"><h2 id="settings-title">Ustawienia</h2></div>
+              <CodeAndLicenses />
+            </aside>
+          )}
+          <ChildrenLessons coach={coach}
+            waitForAnalysis={waitForAnalysis} registerCancellation={registerLionCancellation} />
+        </div>
       ) : <div className="study">
         <aside className="panel settings-panel" id="game-settings" aria-labelledby="settings-title" data-open={settingsOpen}>
           <div className="panel-heading"><h2 id="settings-title">Ustawienia</h2></div>
           <div className="settings-body">
             {isSparring ? (
-              <>
+              <fieldset className="setting-group">
+                <legend>Partia</legend>
                 <p className="player-color">Grasz {player === 'w' ? 'białymi' : 'czarnymi'}.</p>
-                <div className="new-game">
+                <div className="setting-grid">
                   <label>
                     Kolor nowej partii
                     <select value={nextPlayer} onChange={event => setNextPlayer(event.target.value === 'b' ? 'b' : 'w')}>
@@ -563,23 +591,27 @@ function App() {
                   }} />
                   Podpowiedzi
                 </label>
-              </>
+              </fieldset>
             ) : (
-              <>
-                <label className="checkbox-setting">
-                  <input
-                    type="checkbox"
-                    checked={evaluationVisible}
-                    onChange={event => setEvaluationVisible(event.target.checked)}
-                  />
-                  Pasek oceny
-                </label>
-                <button type="button" className="secondary rotate-board" onClick={() => setAnalysisFlipped(flipped => !flipped)}>
-                  Obróć planszę
-                </button>
-              </>
+              <fieldset className="setting-group">
+                <legend>Plansza</legend>
+                <div className="setting-grid">
+                  <label className="checkbox-setting">
+                    <input
+                      type="checkbox"
+                      checked={evaluationVisible}
+                      onChange={event => setEvaluationVisible(event.target.checked)}
+                    />
+                    Pasek oceny
+                  </label>
+                  <button type="button" className="secondary rotate-board" onClick={() => setAnalysisFlipped(flipped => !flipped)}>
+                    Obróć planszę
+                  </button>
+                </div>
+              </fieldset>
             )}
           </div>
+          {webBuild && <CodeAndLicenses />}
         </aside>
 
         <section className="playing-area" aria-label="Szachownica" data-evaluation={showEvaluation}>
@@ -670,14 +702,26 @@ function App() {
                 )}
               </span>
               <div className="coach-identity">
-                <h2>Trener</h2>
-                <CoachPicker coach={coach} onChange={changeCoach} />
+                <p className="coach-kicker">Trener</p>
+                <h2>{coachName}</h2>
                 {isSparring && <p>Gra z arcymistrzem · Stockfish</p>}
+                <button
+                  type="button"
+                  className="secondary ask-hint"
+                  aria-expanded={adviceVisible}
+                  onClick={() => setAdviceKey(positionKey)}
+                >
+                  Poproś o wskazówki
+                </button>
               </div>
             </div>
+            {adviceVisible && advice && <p className="coach-bubble" role="status">{advice}</p>}
             <div className="coach-body">
               <div className="coach-message">
-                <span className="engine-status" role="status">{coachStatus}{hint && <strong>{hint.san}</strong>}</span>
+                <span className="engine-status" role="status">
+                  {coachStatus}
+                  {hint && <> <strong aria-label={moveLabel(hint.san)}><MoveText san={hint.san} /></strong></>}
+                </span>
                 {hint && (
                   <button className="secondary" type="button" onClick={() => { void readHint(); }} disabled={!engine?.recordedHint && !engine?.speakHint}>
                     Odczytaj
@@ -708,12 +752,27 @@ function App() {
               </summary>
               {!gameOver && lines.length > 0 ? (
                 <ol className="variations" aria-label="Warianty silnika">
-                  {lines.map(line => (
-                    <li key={line.rank}>
-                      <span className="score">{formatScore(line.score, turn)}</span>
-                      <span>{line.san.join(' ')}</span>
-                    </li>
-                  ))}
+                  {lines.map(engineLine => {
+                    const tokens = variationTokens(engineLine.san, turn, chess.moveNumber());
+                    const readable = tokens.map(token => `${token.prefix ? `${token.prefix} ` : ''}${polishSan(token.san)}`).join(' ');
+                    const spoken = tokens.map(token => `${token.prefix ? `${token.prefix} ` : ''}${moveLabel(token.san)}`).join(' ');
+                    const score = formatScore(engineLine.score, turn);
+                    return (
+                      <li key={engineLine.rank} aria-label={`${score}. ${spoken}`} title={readable}>
+                        <span className="pv-line" aria-hidden="true">
+                          <span className="score">{score}</span>
+                          <span className="pv-moves">
+                            {tokens.map((token, index) => (
+                              <span className="pv-move" key={`${engineLine.rank}-${index}`}>
+                                {token.prefix && <span className="pv-prefix">{token.prefix}</span>}
+                                <MoveText san={token.san} />
+                              </span>
+                            ))}
+                          </span>
+                        </span>
+                      </li>
+                    );
+                  })}
                 </ol>
               ) : (
                 <p className="engine-empty">Brak wariantów dla tej pozycji.</p>
@@ -723,36 +782,54 @@ function App() {
 
           <section className="panel move-panel" aria-labelledby="moves-title">
             <div className="panel-heading">
-              <h2 id="moves-title">{isSparring ? 'Historia partii' : 'Drzewo ruchów'}</h2>
+              <h2 id="moves-title">Zapis partii</h2>
             </div>
-            <ol className="history">
-              {rows.map(({ node, indent }) => {
-                const selected = active === node ? 'step' : undefined;
-                const label = node.move ? (
-                  <>
-                    <span className="move-number">{Math.ceil(node.ply / 2)}{node.ply % 2 === 1 ? '.' : '…'}</span>
-                    {node.move.san}
-                  </>
-                ) : 'Początek partii';
-                return (
-                  <li key={node.id} style={{ paddingInlineStart: Math.min(indent, 6) * 16 }}>
-                    {isSparring ? (
-                      <span className="recorded-move" aria-current={selected}>{label}</span>
-                    ) : (
-                      <button
-                        type="button"
-                        aria-current={selected}
-                        onClick={() => setWorkspace(current => current.mode === 'analysis'
-                          ? updateStudy(current, selectLine(current.analysis, node))
-                          : current)}
-                      >
-                        {label}
-                      </button>
-                    )}
-                  </li>
-                );
-              })}
-            </ol>
+            <div className="history" ref={scoreFrame}>
+              {isSparring ? (
+                <span className="recorded-move history-start" aria-current={active.ply === 0 ? 'step' : undefined}>Początek partii</span>
+              ) : (
+                <button
+                  type="button"
+                  className="history-start"
+                  aria-current={active.ply === 0 ? 'step' : undefined}
+                  onClick={() => selectNode(nodes[0])}
+                >
+                  Początek partii
+                </button>
+              )}
+              <div className="score-sheet">
+                {moveColumns.map(column => (
+                  <ol className="score-column" key={column[0]?.white?.id ?? column[0]?.black?.id ?? 'empty'}>
+                    {column.map(row => (
+                      <li key={`${row.white?.id ?? 'w'}-${row.black?.id ?? 'b'}`}>
+                        <span className="move-number" aria-hidden="true">{row.number}.</span>
+                        {halfMove(row.white, `${row.number}.`)}
+                        {halfMove(row.black, `${row.number}…`)}
+                      </li>
+                    ))}
+                  </ol>
+                ))}
+              </div>
+              {!isSparring && branches.length > 0 && (
+                <div className="branches">
+                  <h3>Odnogi</h3>
+                  <ul>
+                    {branches.map(node => {
+                      if (!node.move) return null;
+                      const marker = `${Math.ceil(node.ply / 2)}${node.ply % 2 === 1 ? '.' : '…'}`;
+                      return (
+                        <li key={node.id}>
+                          <button type="button" aria-label={`${marker} ${moveLabel(node.move.san)}`} onClick={() => selectNode(node)}>
+                            <span className="move-number" aria-hidden="true">{marker}</span>
+                            <MoveText san={node.move.san} />
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              )}
+            </div>
           </section>
         </aside>
       </div>}
@@ -760,4 +837,12 @@ function App() {
   );
 }
 
-createRoot(document.getElementById('root')!).render(<App />);
+async function renderApp() {
+  if (import.meta.env.MODE === 'web') {
+    const { createWebCoach } = await import('./web-coach');
+    window.chessCoach = createWebCoach();
+  }
+  createRoot(document.getElementById('root')!).render(<App />);
+}
+
+void renderApp();

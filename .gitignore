@@ -9,5 +9,7 @@
 # Dependencies and desktop build output
 node_modules/
 /dist/
+/dist-web/
+/.vercel/
 /out/
 /release/

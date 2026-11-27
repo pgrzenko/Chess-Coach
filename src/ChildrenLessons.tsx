@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CoachPicker, type Coach } from './Coach';
+import { coaches, type Coach } from './Coach';
 import { unlockLessonAudio } from './lesson-audio';
 import { LionLesson } from './LionLesson';
 import { PieceLesson } from './PieceLesson';
@@ -17,9 +17,8 @@ const choices: { kind: LessonKind; title: string }[] = [
   { kind: 'mate', title: 'Mat w jednym' },
 ];
 
-export function ChildrenLessons({ coach, onCoachChange, waitForAnalysis, registerCancellation }: {
+export function ChildrenLessons({ coach, waitForAnalysis, registerCancellation }: {
   coach: Coach;
-  onCoachChange: (coach: Coach) => void;
   waitForAnalysis: () => Promise<void>;
   registerCancellation: (cancellation: Promise<void>) => void;
 }) {
@@ -31,11 +30,12 @@ export function ChildrenLessons({ coach, onCoachChange, waitForAnalysis, registe
         {lesson ? (
           <button type="button" className="secondary" onClick={() => setLesson(undefined)}>Wybór lekcji</button>
         ) : <h2>Wybierz lekcję</h2>}
-        <div className="children-coach-choice">
-          <span>{lesson ? 'Trener na następną lekcję' : 'Trener'}</span>
-          <CoachPicker coach={coach} onChange={onCoachChange}
-            label={lesson ? 'Wybierz trenera na następną lekcję' : 'Wybierz trenera'} />
-        </div>
+        {lesson && (
+          <p className="children-coach-note">
+            Tę lekcję prowadzi {coaches[lesson.coach].name}.
+            {lesson.coach !== coach && ` ${coaches[coach].name} poprowadzi następną.`}
+          </p>
+        )}
       </header>
 
       {lesson?.kind === 'rook' ? <RookLesson coach={lesson.coach} /> : lesson?.kind === 'mate' ? (
