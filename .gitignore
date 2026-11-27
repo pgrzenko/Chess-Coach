@@ -1,0 +1,13 @@
+# Local agent prompts, reports and private project notes
+/personal/
+
+# API credentials and local overrides
+.env
+.env.*
+!.env.example
+
+# Dependencies and desktop build output
+node_modules/
+/dist/
+/out/
+/release/

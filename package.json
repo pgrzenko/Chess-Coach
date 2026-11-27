@@ -1,0 +1,32 @@
+{
+  "name": "ai-chess-coach",
+  "version": "0.1.0",
+  "private": true,
+  "license": "GPL-3.0-only",
+  "type": "module",
+  "main": "desktop/main.mjs",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "setup:engine": "powershell.exe -NoProfile -File scripts/setup-stockfish.ps1",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit && node --check desktop/main.mjs && node --check desktop/speech.mjs && node --check desktop/stockfish.mjs && node --check desktop/preload.cjs && node --check desktop/lion-lesson.mjs && node --check desktop/openai-env.mjs && node --check desktop/lion-voice.mjs && node --check desktop/speech-normalizer.mjs && node --check desktop/recorded-clips.mjs",
+    "start": "npm run build && electron .",
+    "test": "node --test desktop/stockfish.test.mjs desktop/lion.test.mjs desktop/recorded-clips.test.mjs desktop/piece-lessons.test.mjs"
+  },
+  "dependencies": {
+    "@lichess-org/chessground": "10.0.0",
+    "chess.js": "1.4.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "ws": "8.23.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "electron": "45.5.0",
+    "typescript": "6.0.3",
+    "vite": "8.4.0"
+  }
+}
