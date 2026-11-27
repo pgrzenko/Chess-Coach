@@ -1,0 +1,1110 @@
+{
+  "schema": 1,
+  "generated": "2026-11-27",
+  "provider": "elevenlabs",
+  "model": "Eleven v4",
+  "settings": {
+    "stability": 0.5,
+    "similarity": 0.75,
+    "cloneStrength": 0,
+    "language": "auto",
+    "format": "mp3-44100-128"
+  },
+  "voices": {
+    "lion": {
+      "name": "Michał K., Polish 28-yo Man, Narration Voice",
+      "voiceId": "P9yx385KN0FOmLll8Lkx"
+    },
+    "owl": {
+      "name": "Alicja - Warm & Understanding",
+      "voiceId": "iCzRDxXsrROcDYzWimM9"
+    }
+  },
+  "lines": [
+    {
+      "id": "pl.lion.rook.start",
+      "lesson": "poznaj-wieze",
+      "event": "start",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Kliknij wieżę. Zawieź ją na g4!",
+      "spoken": "Kliknij wieżę. Zawieź ją na gie cztery!",
+      "file": "pl.lion.rook.start.mp3"
+    },
+    {
+      "id": "pl.lion.rook.selected",
+      "lesson": "poznaj-wieze",
+      "event": "selected",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Wybierz jedno z podświetlonych pól.",
+      "spoken": "Wybierz jedno z podświetlonych pól.",
+      "file": "pl.lion.rook.selected.mp3"
+    },
+    {
+      "id": "pl.lion.rook.diagonal",
+      "lesson": "poznaj-wieze",
+      "event": "diagonal",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Dobra próba! Wieża jedzie prosto, wzdłuż rzędu albo kolumny.",
+      "spoken": "Dobra próba! Wieża jedzie prosto, wzdłuż rzędu albo kolumny.",
+      "file": "pl.lion.rook.diagonal.mp3"
+    },
+    {
+      "id": "pl.lion.rook.moved",
+      "lesson": "poznaj-wieze",
+      "event": "moved",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Dobry ruch! Z tego pola poszukaj drogi na g4.",
+      "spoken": "Dobry ruch! Z tego pola poszukaj drogi na gie cztery.",
+      "file": "pl.lion.rook.moved.mp3"
+    },
+    {
+      "id": "pl.lion.rook.finished",
+      "lesson": "poznaj-wieze",
+      "event": "finished",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Brawo! Twoja wieża dojechała na g4.",
+      "spoken": "Brawo! Twoja wieża dojechała na gie cztery.",
+      "file": "pl.lion.rook.finished.mp3"
+    },
+    {
+      "id": "pl.lion.mate.greeting",
+      "lesson": "mat-w-jednym",
+      "event": "greeting",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Który ruch daje mata? Pokaż mi!",
+      "spoken": "Który ruch daje mata? Pokaż mi!",
+      "file": "pl.lion.mate.greeting.mp3"
+    },
+    {
+      "id": "pl.lion.mate.local.f7e8",
+      "lesson": "mat-w-jednym",
+      "event": "local-hint",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Dobra próba! Zagraj hetmanem na e8.",
+      "spoken": "Dobra próba! Zagraj hetmanem na e osiem.",
+      "file": "pl.lion.mate.local.f7e8.mp3",
+      "hint": {
+        "from": "f7",
+        "to": "e8"
+      }
+    },
+    {
+      "id": "pl.lion.passed.bravo",
+      "lesson": "mat-w-jednym",
+      "event": "passed",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Brawo, udało Ci się dać mata!",
+      "spoken": "Brawo, udało Ci się dać mata!",
+      "file": "pl.lion.passed.bravo.mp3"
+    },
+    {
+      "id": "pl.lion.passed.escape",
+      "lesson": "mat-w-jednym",
+      "event": "passed",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Świetnie, król nie ma jak uciec!",
+      "spoken": "Świetnie, król nie ma jak uciec!",
+      "file": "pl.lion.passed.escape.mp3"
+    },
+    {
+      "id": "pl.lion.retry.notyet.f7e8",
+      "lesson": "mat-w-jednym",
+      "event": "retry",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Jeszcze nie ma mata. Hetman na e8 — mat!",
+      "spoken": "Jeszcze nie ma mata. Hetman na e osiem — mat!",
+      "file": "pl.lion.retry.notyet.f7e8.mp3",
+      "hint": {
+        "from": "f7",
+        "to": "e8"
+      }
+    },
+    {
+      "id": "pl.lion.retry.notyet.f7f8",
+      "lesson": "mat-w-jednym",
+      "event": "retry",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Jeszcze nie ma mata. Hetman na f8 — mat!",
+      "spoken": "Jeszcze nie ma mata. Hetman na ef osiem — mat!",
+      "file": "pl.lion.retry.notyet.f7f8.mp3",
+      "hint": {
+        "from": "f7",
+        "to": "f8"
+      }
+    },
+    {
+      "id": "pl.lion.retry.notyet.f7g7",
+      "lesson": "mat-w-jednym",
+      "event": "retry",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Jeszcze nie ma mata. Hetman na g7 — mat!",
+      "spoken": "Jeszcze nie ma mata. Hetman na gie siedem — mat!",
+      "file": "pl.lion.retry.notyet.f7g7.mp3",
+      "hint": {
+        "from": "f7",
+        "to": "g7"
+      }
+    },
+    {
+      "id": "pl.lion.retry.notyet.f7h7",
+      "lesson": "mat-w-jednym",
+      "event": "retry",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Jeszcze nie ma mata. Hetman na h7 — mat!",
+      "spoken": "Jeszcze nie ma mata. Hetman na ha siedem — mat!",
+      "file": "pl.lion.retry.notyet.f7h7.mp3",
+      "hint": {
+        "from": "f7",
+        "to": "h7"
+      }
+    },
+    {
+      "id": "pl.lion.retry.search.f7e8",
+      "lesson": "mat-w-jednym",
+      "event": "retry",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Dobra próba, poszukajmy mata! Hetman na e8 — mat!",
+      "spoken": "Dobra próba, poszukajmy mata! Hetman na e osiem — mat!",
+      "file": "pl.lion.retry.search.f7e8.mp3",
+      "hint": {
+        "from": "f7",
+        "to": "e8"
+      }
+    },
+    {
+      "id": "pl.lion.retry.search.f7f8",
+      "lesson": "mat-w-jednym",
+      "event": "retry",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Dobra próba, poszukajmy mata! Hetman na f8 — mat!",
+      "spoken": "Dobra próba, poszukajmy mata! Hetman na ef osiem — mat!",
+      "file": "pl.lion.retry.search.f7f8.mp3",
+      "hint": {
+        "from": "f7",
+        "to": "f8"
+      }
+    },
+    {
+      "id": "pl.lion.retry.search.f7g7",
+      "lesson": "mat-w-jednym",
+      "event": "retry",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Dobra próba, poszukajmy mata! Hetman na g7 — mat!",
+      "spoken": "Dobra próba, poszukajmy mata! Hetman na gie siedem — mat!",
+      "file": "pl.lion.retry.search.f7g7.mp3",
+      "hint": {
+        "from": "f7",
+        "to": "g7"
+      }
+    },
+    {
+      "id": "pl.lion.retry.search.f7h7",
+      "lesson": "mat-w-jednym",
+      "event": "retry",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Dobra próba, poszukajmy mata! Hetman na h7 — mat!",
+      "spoken": "Dobra próba, poszukajmy mata! Hetman na ha siedem — mat!",
+      "file": "pl.lion.retry.search.f7h7.mp3",
+      "hint": {
+        "from": "f7",
+        "to": "h7"
+      }
+    },
+    {
+      "id": "pl.owl.rook.start",
+      "lesson": "poznaj-wieze",
+      "event": "start",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Huu! Kliknij wieżę i znajdź drogę na g4.",
+      "spoken": "Huu! Kliknij wieżę i znajdź drogę na gie cztery.",
+      "file": "pl.owl.rook.start.mp3"
+    },
+    {
+      "id": "pl.owl.rook.selected",
+      "lesson": "poznaj-wieze",
+      "event": "selected",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Widzisz kropki? Tam może polecieć wieża.",
+      "spoken": "Widzisz kropki? Tam może polecieć wieża.",
+      "file": "pl.owl.rook.selected.mp3"
+    },
+    {
+      "id": "pl.owl.rook.diagonal",
+      "lesson": "poznaj-wieze",
+      "event": "diagonal",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Ładna próba! Wieża lubi proste drogi. Wybierz rząd albo kolumnę.",
+      "spoken": "Ładna próba! Wieża lubi proste drogi. Wybierz rząd albo kolumnę.",
+      "file": "pl.owl.rook.diagonal.mp3"
+    },
+    {
+      "id": "pl.owl.rook.moved",
+      "lesson": "poznaj-wieze",
+      "event": "moved",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Tak się rusza wieża! A którędy teraz na g4?",
+      "spoken": "Tak się rusza wieża! A którędy teraz na gie cztery?",
+      "file": "pl.owl.rook.moved.mp3"
+    },
+    {
+      "id": "pl.owl.rook.finished",
+      "lesson": "poznaj-wieze",
+      "event": "finished",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Brawo! Wieża trafiła prosto na g4.",
+      "spoken": "Brawo! Wieża trafiła prosto na gie cztery.",
+      "file": "pl.owl.rook.finished.mp3"
+    },
+    {
+      "id": "pl.owl.mate.greeting",
+      "lesson": "mat-w-jednym",
+      "event": "greeting",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Gdzie poleci hetman? Poszukaj mata!",
+      "spoken": "Gdzie poleci hetman? Poszukaj mata!",
+      "file": "pl.owl.mate.greeting.mp3"
+    },
+    {
+      "id": "pl.owl.mate.local.f7e8",
+      "lesson": "mat-w-jednym",
+      "event": "local-hint",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Dobra próba! Co zrobi hetman na e8?",
+      "spoken": "Dobra próba! Co zrobi hetman na e osiem?",
+      "file": "pl.owl.mate.local.f7e8.mp3",
+      "hint": {
+        "from": "f7",
+        "to": "e8"
+      }
+    },
+    {
+      "id": "pl.owl.mate.passed",
+      "lesson": "mat-w-jednym",
+      "event": "passed",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Brawo! Król nie ma jak uciec. To mat!",
+      "spoken": "Brawo! Król nie ma jak uciec. To mat!",
+      "file": "pl.owl.mate.passed.mp3"
+    },
+    {
+      "id": "pl.owl.king.start",
+      "lesson": "poznaj-krola",
+      "event": "start",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Huu! Kliknij króla i zaprowadź go na e3.",
+      "spoken": "Huu! Kliknij króla i zaprowadź go na e trzy.",
+      "file": "pl.owl.king.start.mp3"
+    },
+    {
+      "id": "pl.owl.king.selected",
+      "lesson": "poznaj-krola",
+      "event": "selected",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Widzisz kropki? Król idzie tylko o jedno pole.",
+      "spoken": "Widzisz kropki? Król idzie tylko o jedno pole.",
+      "file": "pl.owl.king.selected.mp3"
+    },
+    {
+      "id": "pl.owl.king.too-far",
+      "lesson": "poznaj-krola",
+      "event": "too-far",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Ojej, za daleko! Król robi małe kroki, po jednym polu.",
+      "spoken": "Ojej, za daleko! Król robi małe kroki, po jednym polu.",
+      "file": "pl.owl.king.too-far.mp3"
+    },
+    {
+      "id": "pl.owl.king.too-close",
+      "lesson": "poznaj-krola",
+      "event": "too-close",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Huu, za blisko! Czarny król pilnuje pól wokół siebie.",
+      "spoken": "Huu, za blisko! Czarny król pilnuje pól wokół siebie.",
+      "file": "pl.owl.king.too-close.mp3"
+    },
+    {
+      "id": "pl.owl.king.enemy",
+      "lesson": "poznaj-krola",
+      "event": "enemy",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "To czarny król. Twój król nie stanie tuż obok niego.",
+      "spoken": "To czarny król. Twój król nie stanie tuż obok niego.",
+      "file": "pl.owl.king.enemy.mp3"
+    },
+    {
+      "id": "pl.owl.king.moved",
+      "lesson": "poznaj-krola",
+      "event": "moved",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Tak chodzi król! Którędy teraz na e3?",
+      "spoken": "Tak chodzi król! Którędy teraz na e trzy?",
+      "file": "pl.owl.king.moved.mp3"
+    },
+    {
+      "id": "pl.owl.king.finished",
+      "lesson": "poznaj-krola",
+      "event": "finished",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Brawo! Król jest już na e3.",
+      "spoken": "Brawo! Król jest już na e trzy.",
+      "file": "pl.owl.king.finished.mp3"
+    },
+    {
+      "id": "pl.owl.queen.start",
+      "lesson": "poznaj-hetmana",
+      "event": "start",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Huu! Kliknij hetmana. Dojedzie na g7 jednym ruchem?",
+      "spoken": "Huu! Kliknij hetmana. Dojedzie na gie siedem jednym ruchem?",
+      "file": "pl.owl.queen.start.mp3"
+    },
+    {
+      "id": "pl.owl.queen.selected",
+      "lesson": "poznaj-hetmana",
+      "event": "selected",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Huu, ile kropek! Hetman jedzie prosto albo po skosie.",
+      "spoken": "Huu, ile kropek! Hetman jedzie prosto albo po skosie.",
+      "file": "pl.owl.queen.selected.mp3"
+    },
+    {
+      "id": "pl.owl.queen.bent",
+      "lesson": "poznaj-hetmana",
+      "event": "bent",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Ładna próba! Hetman nie skręca. Jedzie prosto albo po skosie.",
+      "spoken": "Ładna próba! Hetman nie skręca. Jedzie prosto albo po skosie.",
+      "file": "pl.owl.queen.bent.mp3"
+    },
+    {
+      "id": "pl.owl.queen.moved",
+      "lesson": "poznaj-hetmana",
+      "event": "moved",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Tak jeździ hetman! A którędy teraz na g7?",
+      "spoken": "Tak jeździ hetman! A którędy teraz na gie siedem?",
+      "file": "pl.owl.queen.moved.mp3"
+    },
+    {
+      "id": "pl.owl.queen.finished",
+      "lesson": "poznaj-hetmana",
+      "event": "finished",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Brawo! Hetman jest już na g7.",
+      "spoken": "Brawo! Hetman jest już na gie siedem.",
+      "file": "pl.owl.queen.finished.mp3"
+    },
+    {
+      "id": "pl.owl.knight.start",
+      "lesson": "poznaj-skoczka",
+      "event": "start",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Huu! Skoczek siedzi w zagrodzie. Pomożesz mu dostać się na e7?",
+      "spoken": "Huu! Skoczek siedzi w zagrodzie. Pomożesz mu dostać się na e siedem?",
+      "file": "pl.owl.knight.start.mp3"
+    },
+    {
+      "id": "pl.owl.knight.selected",
+      "lesson": "poznaj-skoczka",
+      "event": "selected",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Widzisz kropki? Tam skoczek może wylądować.",
+      "spoken": "Widzisz kropki? Tam skoczek może wylądować.",
+      "file": "pl.owl.knight.selected.mp3"
+    },
+    {
+      "id": "pl.owl.knight.not-l",
+      "lesson": "poznaj-skoczka",
+      "event": "not-l",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Ładna próba! Skoczek nie chodzi prosto ani po skosie. Skacze literą L.",
+      "spoken": "Ładna próba! Skoczek nie chodzi prosto ani po skosie. Skacze literą el.",
+      "file": "pl.owl.knight.not-l.mp3"
+    },
+    {
+      "id": "pl.owl.knight.own-piece",
+      "lesson": "poznaj-skoczka",
+      "event": "own-piece",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Ups, tu już stoi Twój pion. Wybierz wolne pole.",
+      "spoken": "Ups, tu już stoi Twój pion. Wybierz wolne pole.",
+      "file": "pl.owl.knight.own-piece.mp3"
+    },
+    {
+      "id": "pl.owl.knight.blocker",
+      "lesson": "poznaj-skoczka",
+      "event": "blocker",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Piony dziś odpoczywają. Skacze tylko skoczek.",
+      "spoken": "Piony dziś odpoczywają. Skacze tylko skoczek.",
+      "file": "pl.owl.knight.blocker.mp3"
+    },
+    {
+      "id": "pl.owl.knight.jumped",
+      "lesson": "poznaj-skoczka",
+      "event": "jumped",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Hop, przez płot! A którędy teraz na e7?",
+      "spoken": "Hop, przez płot! A którędy teraz na e siedem?",
+      "file": "pl.owl.knight.jumped.mp3"
+    },
+    {
+      "id": "pl.owl.knight.moved",
+      "lesson": "poznaj-skoczka",
+      "event": "moved",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Tak skacze skoczek! Którędy teraz na e7?",
+      "spoken": "Tak skacze skoczek! Którędy teraz na e siedem?",
+      "file": "pl.owl.knight.moved.mp3"
+    },
+    {
+      "id": "pl.owl.knight.finished",
+      "lesson": "poznaj-skoczka",
+      "event": "finished",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Brawo! Skoczek jest już na e7.",
+      "spoken": "Brawo! Skoczek jest już na e siedem.",
+      "file": "pl.owl.knight.finished.mp3"
+    },
+    {
+      "id": "pl.lion.king.start",
+      "lesson": "poznaj-krola",
+      "event": "start",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Kliknij króla. Zaprowadź go na e3!",
+      "spoken": "Kliknij króla. Zaprowadź go na e trzy!",
+      "file": "pl.lion.king.start.mp3"
+    },
+    {
+      "id": "pl.lion.king.selected",
+      "lesson": "poznaj-krola",
+      "event": "selected",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Król robi jeden krok. Wybierz podświetlone pole.",
+      "spoken": "Król robi jeden krok. Wybierz podświetlone pole.",
+      "file": "pl.lion.king.selected.mp3"
+    },
+    {
+      "id": "pl.lion.king.too-far",
+      "lesson": "poznaj-krola",
+      "event": "too-far",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Dobra próba! Król chodzi tylko o jedno pole.",
+      "spoken": "Dobra próba! Król chodzi tylko o jedno pole.",
+      "file": "pl.lion.king.too-far.mp3"
+    },
+    {
+      "id": "pl.lion.king.too-close",
+      "lesson": "poznaj-krola",
+      "event": "too-close",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Tu nie wolno. Królowie nigdy nie stają obok siebie.",
+      "spoken": "Tu nie wolno. Królowie nigdy nie stają obok siebie.",
+      "file": "pl.lion.king.too-close.mp3"
+    },
+    {
+      "id": "pl.lion.king.enemy",
+      "lesson": "poznaj-krola",
+      "event": "enemy",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "To czarny król. Pilnuje wszystkich pól wokół siebie.",
+      "spoken": "To czarny król. Pilnuje wszystkich pól wokół siebie.",
+      "file": "pl.lion.king.enemy.mp3"
+    },
+    {
+      "id": "pl.lion.king.moved",
+      "lesson": "poznaj-krola",
+      "event": "moved",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Dobry krok! Idź dalej na e3.",
+      "spoken": "Dobry krok! Idź dalej na e trzy.",
+      "file": "pl.lion.king.moved.mp3"
+    },
+    {
+      "id": "pl.lion.king.finished",
+      "lesson": "poznaj-krola",
+      "event": "finished",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Brawo! Król doszedł na e3.",
+      "spoken": "Brawo! Król doszedł na e trzy.",
+      "file": "pl.lion.king.finished.mp3"
+    },
+    {
+      "id": "pl.lion.queen.start",
+      "lesson": "poznaj-hetmana",
+      "event": "start",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Kliknij hetmana. Dojedziesz na g7 jednym ruchem?",
+      "spoken": "Kliknij hetmana. Dojedziesz na gie siedem jednym ruchem?",
+      "file": "pl.lion.queen.start.mp3"
+    },
+    {
+      "id": "pl.lion.queen.selected",
+      "lesson": "poznaj-hetmana",
+      "event": "selected",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Hetman jeździ jak wieża, a do tego po skosie.",
+      "spoken": "Hetman jeździ jak wieża, a do tego po skosie.",
+      "file": "pl.lion.queen.selected.mp3"
+    },
+    {
+      "id": "pl.lion.queen.bent",
+      "lesson": "poznaj-hetmana",
+      "event": "bent",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Dobra próba! Hetman jedzie prosto albo po skosie, bez skręcania.",
+      "spoken": "Dobra próba! Hetman jedzie prosto albo po skosie, bez skręcania.",
+      "file": "pl.lion.queen.bent.mp3"
+    },
+    {
+      "id": "pl.lion.queen.moved",
+      "lesson": "poznaj-hetmana",
+      "event": "moved",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Dobry ruch! Z tego pola poszukaj drogi na g7.",
+      "spoken": "Dobry ruch! Z tego pola poszukaj drogi na gie siedem.",
+      "file": "pl.lion.queen.moved.mp3"
+    },
+    {
+      "id": "pl.lion.queen.finished",
+      "lesson": "poznaj-hetmana",
+      "event": "finished",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Brawo! Hetman dojechał na g7.",
+      "spoken": "Brawo! Hetman dojechał na gie siedem.",
+      "file": "pl.lion.queen.finished.mp3"
+    },
+    {
+      "id": "pl.lion.knight.start",
+      "lesson": "poznaj-skoczka",
+      "event": "start",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Skoczek stoi za płotem z pionów. Skocz nim na e7!",
+      "spoken": "Skoczek stoi za płotem z pionów. Skocz nim na e siedem!",
+      "file": "pl.lion.knight.start.mp3"
+    },
+    {
+      "id": "pl.lion.knight.selected",
+      "lesson": "poznaj-skoczka",
+      "event": "selected",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Skoczek skacze literą L. Wybierz kropkę.",
+      "spoken": "Skoczek skacze literą el. Wybierz kropkę.",
+      "file": "pl.lion.knight.selected.mp3"
+    },
+    {
+      "id": "pl.lion.knight.not-l",
+      "lesson": "poznaj-skoczka",
+      "event": "not-l",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Dobra próba! Skoczek skacze literą L: dwa pola prosto i jedno w bok.",
+      "spoken": "Dobra próba! Skoczek skacze literą el: dwa pola prosto i jedno w bok.",
+      "file": "pl.lion.knight.not-l.mp3"
+    },
+    {
+      "id": "pl.lion.knight.own-piece",
+      "lesson": "poznaj-skoczka",
+      "event": "own-piece",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Tu stoi Twój pion. Skoczek tu nie wyląduje.",
+      "spoken": "Tu stoi Twój pion. Skoczek tu nie wyląduje.",
+      "file": "pl.lion.knight.own-piece.mp3"
+    },
+    {
+      "id": "pl.lion.knight.blocker",
+      "lesson": "poznaj-skoczka",
+      "event": "blocker",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Piony dziś tylko pilnują płotu. Kliknij skoczka.",
+      "spoken": "Piony dziś tylko pilnują płotu. Kliknij skoczka.",
+      "file": "pl.lion.knight.blocker.mp3"
+    },
+    {
+      "id": "pl.lion.knight.jumped",
+      "lesson": "poznaj-skoczka",
+      "event": "jumped",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Hop! Skoczek przeskakuje inne figury. Teraz na e7.",
+      "spoken": "Hop! Skoczek przeskakuje inne figury. Teraz na e siedem.",
+      "file": "pl.lion.knight.jumped.mp3"
+    },
+    {
+      "id": "pl.lion.knight.moved",
+      "lesson": "poznaj-skoczka",
+      "event": "moved",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Dobry skok! Z tego pola poszukaj drogi na e7.",
+      "spoken": "Dobry skok! Z tego pola poszukaj drogi na e siedem.",
+      "file": "pl.lion.knight.moved.mp3"
+    },
+    {
+      "id": "pl.lion.knight.finished",
+      "lesson": "poznaj-skoczka",
+      "event": "finished",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Brawo! Skoczek doskoczył na e7.",
+      "spoken": "Brawo! Skoczek doskoczył na e siedem.",
+      "file": "pl.lion.knight.finished.mp3"
+    },
+    {
+      "id": "pl.owl.bishop.start",
+      "lesson": "poznaj-gonca",
+      "event": "start",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Huu! Pomożesz gońcowi z d4 dotrzeć na g5?",
+      "spoken": "Huu! Pomożesz gońcowi z de cztery dotrzeć na gie pięć?",
+      "file": "pl.owl.bishop.start.mp3"
+    },
+    {
+      "id": "pl.owl.pawn.promoted",
+      "lesson": "poznaj-piona",
+      "event": "promoted",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Huu! Na e8 pion stał się hetmanem. Taka zamiana to promocja.",
+      "spoken": "Huu! Na e osiem pion stał się hetmanem. Taka zamiana to promocja.",
+      "file": "pl.owl.pawn.promoted.mp3"
+    },
+    {
+      "id": "pl.lion.bishop.start",
+      "lesson": "poznaj-gonca",
+      "event": "start",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Kliknij gońca na d4. Znajdź drogę na g5!",
+      "spoken": "Kliknij gońca na de cztery. Znajdź drogę na gie pięć!",
+      "file": "pl.lion.bishop.start.mp3"
+    },
+    {
+      "id": "pl.lion.pawn.promoted",
+      "lesson": "poznaj-piona",
+      "event": "promoted",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Pion dotarł na e8 i zmienił się w hetmana. To promocja!",
+      "spoken": "Pion dotarł na e osiem i zmienił się w hetmana. To promocja!",
+      "file": "pl.lion.pawn.promoted.mp3"
+    },
+    {
+      "id": "pl.lion.bishop.selected",
+      "lesson": "poznaj-gonca",
+      "event": "selected",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Goniec chodzi po skosie. Zobacz, jaki kolor mają pola z kropkami.",
+      "spoken": "Goniec chodzi po skosie. Zobacz, jaki kolor mają pola z kropkami.",
+      "file": "pl.lion.bishop.selected.mp3"
+    },
+    {
+      "id": "pl.lion.bishop.not-diagonal",
+      "lesson": "poznaj-gonca",
+      "event": "not-diagonal",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Spróbuj po skosie. Goniec zawsze zostaje na polach tego samego koloru.",
+      "spoken": "Spróbuj po skosie. Goniec zawsze zostaje na polach tego samego koloru.",
+      "file": "pl.lion.bishop.not-diagonal.mp3"
+    },
+    {
+      "id": "pl.lion.bishop.moved",
+      "lesson": "poznaj-gonca",
+      "event": "moved",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Dobry ruch! Poszukaj teraz skosu w stronę g5.",
+      "spoken": "Dobry ruch! Poszukaj teraz skosu w stronę gie pięć.",
+      "file": "pl.lion.bishop.moved.mp3"
+    },
+    {
+      "id": "pl.lion.bishop.finished",
+      "lesson": "poznaj-gonca",
+      "event": "finished",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Brawo! Goniec dotarł na g5.",
+      "spoken": "Brawo! Goniec dotarł na gie pięć.",
+      "file": "pl.lion.bishop.finished.mp3"
+    },
+    {
+      "id": "pl.lion.pawn.start",
+      "lesson": "poznaj-piona",
+      "event": "start",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Zaprowadź piona z e2 na e8. Zobacz, w co się zmieni!",
+      "spoken": "Zaprowadź piona z e dwa na e osiem. Zobacz, w co się zmieni!",
+      "file": "pl.lion.pawn.start.mp3"
+    },
+    {
+      "id": "pl.lion.pawn.selected",
+      "lesson": "poznaj-piona",
+      "event": "selected",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Pion idzie do przodu o jedno pole. Z e2 może ruszyć o dwa pola, jeśli oba są wolne.",
+      "spoken": "Pion idzie do przodu o jedno pole. Z e dwa może ruszyć o dwa pola, jeśli oba są wolne.",
+      "file": "pl.lion.pawn.selected.mp3"
+    },
+    {
+      "id": "pl.lion.pawn.pawn-forward",
+      "lesson": "poznaj-piona",
+      "event": "pawn-forward",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Wybierz kropkę przed pionem. W tej części pion idzie prosto do przodu.",
+      "spoken": "Wybierz kropkę przed pionem. W tej części pion idzie prosto do przodu.",
+      "file": "pl.lion.pawn.pawn-forward.mp3"
+    },
+    {
+      "id": "pl.lion.pawn.moved",
+      "lesson": "poznaj-piona",
+      "event": "moved",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Idź dalej w stronę e8.",
+      "spoken": "Idź dalej w stronę e osiem.",
+      "file": "pl.lion.pawn.moved.mp3"
+    },
+    {
+      "id": "pl.lion.pawn.capture-start",
+      "lesson": "poznaj-piona",
+      "event": "capture-start",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Pion na e4 ma przed sobą czarnego piona. Zbij czarnego piona na d5.",
+      "spoken": "Pion na e cztery ma przed sobą czarnego piona. Zbij czarnego piona na de pięć.",
+      "file": "pl.lion.pawn.capture-start.mp3"
+    },
+    {
+      "id": "pl.lion.pawn.capture-selected",
+      "lesson": "poznaj-piona",
+      "event": "capture-selected",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Pion bije jedno pole po skosie do przodu. Cel to d5.",
+      "spoken": "Pion bije jedno pole po skosie do przodu. Cel to de pięć.",
+      "file": "pl.lion.pawn.capture-selected.mp3"
+    },
+    {
+      "id": "pl.lion.pawn.pawn-blocked",
+      "lesson": "poznaj-piona",
+      "event": "pawn-blocked",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Na e5 stoi czarny pion. Pion nie bije prosto przed siebie.",
+      "spoken": "Na e pięć stoi czarny pion. Pion nie bije prosto przed siebie.",
+      "file": "pl.lion.pawn.pawn-blocked.mp3"
+    },
+    {
+      "id": "pl.lion.pawn.capture-only",
+      "lesson": "poznaj-piona",
+      "event": "capture-only",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Pion idzie po skosie tylko wtedy, gdy bije figurę przeciwnika. Spróbuj na d5.",
+      "spoken": "Pion idzie po skosie tylko wtedy, gdy bije figurę przeciwnika. Spróbuj na de pięć.",
+      "file": "pl.lion.pawn.capture-only.mp3"
+    },
+    {
+      "id": "pl.lion.pawn.finished",
+      "lesson": "poznaj-piona",
+      "event": "finished",
+      "coach": "lion",
+      "voiceId": "P9yx385KN0FOmLll8Lkx",
+      "model": "Eleven v4",
+      "bubble": "Brawo! Pion zbił po skosie na d5.",
+      "spoken": "Brawo! Pion zbił po skosie na de pięć.",
+      "file": "pl.lion.pawn.finished.mp3"
+    },
+    {
+      "id": "pl.owl.bishop.selected",
+      "lesson": "poznaj-gonca",
+      "event": "selected",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Wybierz kropkę na skosie. Wszystkie są na polach w tym samym kolorze!",
+      "spoken": "Wybierz kropkę na skosie. Wszystkie są na polach w tym samym kolorze!",
+      "file": "pl.owl.bishop.selected.mp3"
+    },
+    {
+      "id": "pl.owl.bishop.not-diagonal",
+      "lesson": "poznaj-gonca",
+      "event": "not-diagonal",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Ojej, tędy nie ma skosu! Wybierz pole z kropką.",
+      "spoken": "Ojej, tędy nie ma skosu! Wybierz pole z kropką.",
+      "file": "pl.owl.bishop.not-diagonal.mp3"
+    },
+    {
+      "id": "pl.owl.bishop.moved",
+      "lesson": "poznaj-gonca",
+      "event": "moved",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Tak chodzi goniec! Którędy teraz na g5?",
+      "spoken": "Tak chodzi goniec! Którędy teraz na gie pięć?",
+      "file": "pl.owl.bishop.moved.mp3"
+    },
+    {
+      "id": "pl.owl.bishop.finished",
+      "lesson": "poznaj-gonca",
+      "event": "finished",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Udało się! Goniec jest na g5.",
+      "spoken": "Udało się! Goniec jest na gie pięć.",
+      "file": "pl.owl.bishop.finished.mp3"
+    },
+    {
+      "id": "pl.owl.pawn.start",
+      "lesson": "poznaj-piona",
+      "event": "start",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Huu! Rusz pionem z e2 i doprowadź go aż na e8.",
+      "spoken": "Huu! Rusz pionem z e dwa i doprowadź go aż na e osiem.",
+      "file": "pl.owl.pawn.start.mp3"
+    },
+    {
+      "id": "pl.owl.pawn.selected",
+      "lesson": "poznaj-piona",
+      "event": "selected",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Pion robi krok do przodu. Z e2 może zrobić dwa kroki, jeśli oba pola są wolne.",
+      "spoken": "Pion robi krok do przodu. Z e dwa może zrobić dwa kroki, jeśli oba pola są wolne.",
+      "file": "pl.owl.pawn.selected.mp3"
+    },
+    {
+      "id": "pl.owl.pawn.pawn-forward",
+      "lesson": "poznaj-piona",
+      "event": "pawn-forward",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Spójrz na kropki przed pionem. Która prowadzi naprzód?",
+      "spoken": "Spójrz na kropki przed pionem. Która prowadzi naprzód?",
+      "file": "pl.owl.pawn.pawn-forward.mp3"
+    },
+    {
+      "id": "pl.owl.pawn.moved",
+      "lesson": "poznaj-piona",
+      "event": "moved",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Jeszcze kawałek do e8. Które pole jest teraz przed pionem?",
+      "spoken": "Jeszcze kawałek do e osiem. Które pole jest teraz przed pionem?",
+      "file": "pl.owl.pawn.moved.mp3"
+    },
+    {
+      "id": "pl.owl.pawn.capture-start",
+      "lesson": "poznaj-piona",
+      "event": "capture-start",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Huu! Drogę na wprost zastawia czarny pion. Zbij drugiego, na d5.",
+      "spoken": "Huu! Drogę na wprost zastawia czarny pion. Zbij drugiego, na de pięć.",
+      "file": "pl.owl.pawn.capture-start.mp3"
+    },
+    {
+      "id": "pl.owl.pawn.capture-selected",
+      "lesson": "poznaj-piona",
+      "event": "capture-selected",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Poszukaj czarnego piona jedno pole po skosie do przodu. To d5.",
+      "spoken": "Poszukaj czarnego piona jedno pole po skosie do przodu. To de pięć.",
+      "file": "pl.owl.pawn.capture-selected.mp3"
+    },
+    {
+      "id": "pl.owl.pawn.pawn-blocked",
+      "lesson": "poznaj-piona",
+      "event": "pawn-blocked",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Czarny pion na e5 blokuje drogę. Pion może zbić tylko po skosie.",
+      "spoken": "Czarny pion na e pięć blokuje drogę. Pion może zbić tylko po skosie.",
+      "file": "pl.owl.pawn.pawn-blocked.mp3"
+    },
+    {
+      "id": "pl.owl.pawn.capture-only",
+      "lesson": "poznaj-piona",
+      "event": "capture-only",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Po skosie pion rusza, gdy może coś zbić. Sprawdź d5.",
+      "spoken": "Po skosie pion rusza, gdy może coś zbić. Sprawdź de pięć.",
+      "file": "pl.owl.pawn.capture-only.mp3"
+    },
+    {
+      "id": "pl.owl.pawn.finished",
+      "lesson": "poznaj-piona",
+      "event": "finished",
+      "coach": "owl",
+      "voiceId": "iCzRDxXsrROcDYzWimM9",
+      "model": "Eleven v4",
+      "bubble": "Udało się! Pion zbił po skosie i jest na d5.",
+      "spoken": "Udało się! Pion zbił po skosie i jest na de pięć.",
+      "file": "pl.owl.pawn.finished.mp3"
+    }
+  ]
+}

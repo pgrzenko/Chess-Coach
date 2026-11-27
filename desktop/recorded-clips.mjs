@@ -2,17 +2,8 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { sparringHintSpeech } from './speech-normalizer.mjs';
 
-export const packDirectory = path.resolve(
-  import.meta.dirname,
-  '..',
-  'personal',
-  'ai-outputs',
-  'Autopilot',
-  'odsluch',
-  'elevenlabs',
-  'paczka-pl',
-);
-export const sparringPackDirectory = path.join(path.dirname(packDirectory), 'sparing-pl');
+export const packDirectory = path.resolve(import.meta.dirname, '..', 'recordings', 'lessons');
+export const sparringPackDirectory = path.resolve(import.meta.dirname, '..', 'recordings', 'sparring');
 
 const rookEvents = new Set(['start', 'selected', 'diagonal', 'moved', 'finished']);
 const pieceEvents = {

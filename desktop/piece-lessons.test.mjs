@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { test } from 'node:test';
 import { Chess } from 'chess.js';
+import { packDirectory } from './recorded-clips.mjs';
 import {
   arrivalEvent,
   classifyClick,
@@ -16,7 +17,7 @@ import {
 
 const files = 'abcdefgh';
 const squares = [...files].flatMap(file => [1, 2, 3, 4, 5, 6, 7, 8].map(rank => file + rank));
-const pack = path.resolve(import.meta.dirname, '../personal/ai-outputs/Autopilot/odsluch/elevenlabs/paczka-pl/manifest.json');
+const pack = path.join(packDirectory, 'manifest.json');
 
 test('king clicks match the checked board and a longer path still finishes', () => {
   assert.equal(kingFen('b2'), '8/8/8/8/2k5/8/1K6/8 w - - 0 1');
